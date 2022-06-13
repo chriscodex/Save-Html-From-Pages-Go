@@ -3,14 +3,15 @@ package main
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 )
 
 type writerWeb struct{}
 
 func (writerWeb) Write(p []byte) (int, error) {
-	fmt.Println(p)
-	return 0, nil
+	ioutil.WriteFile("index.html", p, 0644)
+	return len(p), nil
 }
 
 func main() {
