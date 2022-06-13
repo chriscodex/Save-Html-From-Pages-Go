@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
+	"os"
 )
 
 type writerWeb struct{}
@@ -14,8 +16,15 @@ func (writerWeb) Write(p []byte) (int, error) {
 	return len(p), nil
 }
 
+func scan() string {
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	return scanner.Text()
+}
+
 func main() {
-	response, err := http.Get("http://google.com")
+	url := scan()
+	response, err := http.Get(url)
 	if err != nil {
 		fmt.Println(err)
 	}
